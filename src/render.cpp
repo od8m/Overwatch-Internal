@@ -108,6 +108,11 @@ static void DrawEntList(ImDrawList* dl) {
         g_entities.size(), g_debug.screen_valid_count, g_debug.vm_ok ? S("OK") : S("BAD"), g_localTeam);
     Line(IM_COL32(0, 230, 255, 255), buf);
 
+    snprintf(buf, sizeof(buf), S("[DBG] List:%llX Slots:%u Raw:%u NonNull:%u Link:%u Match:%u Vel:%u"),
+        (unsigned long long)g_debug.entity_list_ptr, g_debug.slot_count, g_debug.raw_slots,
+        g_debug.non_null_slots, g_debug.link_count, g_debug.common_match_count, g_debug.velocity_count);
+    Line(IM_COL32(0, 190, 220, 255), buf);
+
     int idx = 0, shown = 0;
     for (auto& e : g_entities) {
         if (e.isLocal) {

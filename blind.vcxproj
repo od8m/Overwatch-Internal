@@ -42,8 +42,8 @@
       <AdditionalDependencies>d3d11.lib;dxgi.lib;dwmapi.lib;dcomp.lib;windowscodecs.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /I /Y "$(ProjectDir)assets\heroes" "$(OutDir)assets\heroes\"
-xcopy /E /I /Y "$(ProjectDir)assets\abilities" "$(OutDir)assets\abilities\"</Command>
+      <Command>if exist "$(ProjectDir)assets\heroes\" xcopy /E /I /Y "$(ProjectDir)assets\heroes" "$(OutDir)assets\heroes\"
+if exist "$(ProjectDir)assets\abilities\" xcopy /E /I /Y "$(ProjectDir)assets\abilities" "$(OutDir)assets\abilities\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

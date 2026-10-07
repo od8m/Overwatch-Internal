@@ -82,13 +82,7 @@ inline bool get_3dbox_corners(uint64_t pBoneData, float3 epos, float rotY, float
 inline bool DecryptVis(uint64_t InVisibilityComponent) {
     if (!InVisibilityComponent) return true;
     __try {
-        uint64_t enc = SDK->RPM<uint64_t>(InVisibilityComponent + offset::VisibilityValueOffset);
-        uint64_t val = _rotr64(enc, 5);
-        val += 0xE787229EFD0114B0ULL;
-        val = _rotr64(val, 8);
-        val ^= 0x9C14F90B00C574A9ULL;
-        val = _rotr64(val, 19);
-        return (val & 0x1) != 0;
+        return (SDK->RPM<uint64_t>(InVisibilityComponent + offset::VisibilityValueOffset) & 0x4ULL) != 0;
     } __except (1) { return true; }
 }
 
@@ -97,27 +91,30 @@ inline uint64_t DecryptComponent(uint64_t entity, uint8_t component_id) {
     uint64_t high_bit_mask = (1ULL << bit);
     uint64_t low_bits_mask = high_bit_mask - 1ULL;
     uint64_t index = component_id >> 6;
-    uint64_t component_bitmap = SDK->RPM<uint64_t>(entity + (8 * index) + 0x110);
+    uint64_t component_bitmap = SDK->RPM<uint64_t>(entity + (8 * index) + offset::ENT_BITMAP);
     if (!(component_bitmap & high_bit_mask)) return 0;
     uint64_t isolated_bitmap = low_bits_mask & component_bitmap;
     uint64_t tmp1 = isolated_bitmap - ((isolated_bitmap >> 1) & 0x5555555555555555ULL);
     uint64_t tmp2 = (tmp1 & 0x3333333333333333ULL) + ((tmp1 >> 2) & 0x3333333333333333ULL);
     uint64_t tmp3 = (tmp2 + (tmp2 >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
     uint64_t bit_count = (0x101010101010101ULL * tmp3) >> 56;
-    uint64_t component_table   = SDK->RPM<uint64_t>(entity + 0x80);
-    uint8_t  table_entry_index = SDK->RPM<uint8_t>(entity + index + 0x130);
+    uint64_t component_table   = SDK->RPM<uint64_t>(entity + offset::ENT_COMP_BASE);
+    uint8_t  table_entry_index = SDK->RPM<uint8_t>(entity + index + offset::ENT_INDEX);
     uint64_t qword_ptr         = SDK->RPM<uint64_t>(SDK->dwGameBase + offset::OW_COMPONENT_QWORD);
     uint8_t  enc_byte          = SDK->RPM<uint8_t>(SDK->dwGameBase + offset::OW_COMPONENT_BYTE);
-    uint64_t component_salt    = SDK->RPM<uint64_t>(qword_ptr + offset::ComponentXorQwordOffset);
     uint64_t slot_index = table_entry_index + bit_count;
     uint64_t component_ptr = SDK->RPM<uint64_t>(component_table + (slot_index * 8));
-    uint64_t v = component_salt ^ component_ptr;
-    v = _rotr64(v, 9);
-    v += 0x0BA96615BF373CE1ULL;
-    v = _rotr64(v, 47);
+    uint64_t key = SDK->RPM<uint64_t>(qword_ptr + offset::ComponentXorQwordOffset);
+    uint64_t v = component_ptr;
+    v += 0x71BB63C5EAF78BAFULL;
+    v = _rotr64(v, 13);
+    v += 0xE855E0A80EBF17A4ULL;
     v ^= enc_byte;
-    v ^= 0x71B2AC20DD7FA037ULL;
-    v ^= 0x9A2687D39D0D255AULL;
+    v += 0xC09FFEDCBD53E5FDULL;
+    v ^= 0xC30428F894B27FE8ULL;
+    v += 0x6EAA12A7C85CB2C1ULL;
+    v ^= key;
+    v ^= 0x1E1BD7260A5582DCULL;
     return v & -(int64_t)((component_bitmap & high_bit_mask) >> bit);
 }
 

@@ -466,7 +466,7 @@ static void ReadEntitiesImpl() {
         if (!lnk) continue;
         g_debug.link_count++;
 
-        uint32_t uid = SDK->RPM<uint32_t>(lnk + 0xD4);
+        uint32_t uid = SDK->RPM<uint32_t>(lnk + offset::LINK_UID_OFF);
         uint64_t common = findCommon(uid, a);
         if (!common) {
             uint64_t bmSelf = SDK->RPM<uint64_t>(a + 0x110);
@@ -637,7 +637,7 @@ void ReadViewMatrix() {
         return;
     }
 
-    g_debug.vm_root = (g_debug.vm_enc - offset::ViewMatrix_Sub) ^ offset::ViewMatrix_Xor;
+    g_debug.vm_root = ((g_debug.vm_enc + offset::VM_FUCKBLIZZARD) ^ offset::VM_XOR) - offset::VM_SUB; // vm_dec
     if (!IsValidPtr(g_debug.vm_root)) {
         g_debug.vm_ok = false;
         return;

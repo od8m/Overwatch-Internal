@@ -36,6 +36,7 @@ static inline const char* _hname(uint16_t id)
 		case 0x0472: return S("Vendetta");     case 0x04C4: return S("Domina");
 		case 0x04D8: return S("Emre");         case 0x04DD: return S("Anran");
 		case 0x04E3: return S("Mizuki");       case 0x0516: return S("Jetpack Cat");
+		case 0x0570: return S("Doctrine");
 		default: return nullptr;
 	}
 }

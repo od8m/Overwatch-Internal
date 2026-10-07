@@ -1,22 +1,35 @@
 #pragma once
 #include <cstdint>
 
-// Overwatch 2.24.1.0.153480 — dumped 2026-09-19 
+// Overwatch 2.24.1.0.153480 — dumped 2026-10-06
 namespace offset {
 
-    constexpr uint64_t ENTITY_LIST           = 0x3AB5AC8;
-    constexpr uint64_t ENTITY_REGISTRY       = 0x3AB5AB4;  // capacity @+0, count @+4, slots ptr @+0x14
-    constexpr uint64_t CAMERA_ENC            = 0x3A55C48;
-    constexpr uint64_t CLIENT_GAME           = 0x3C17AA8;
-    constexpr uint64_t GLOBAL_ADMIN          = 0x3C1D810;
-    constexpr uint64_t GKEY_PTR              = 0x3C17988;
-    constexpr uint64_t BYTE_KEY              = 0x38F0A5B;
-    constexpr uint64_t SM_XOR_BYTE           = 0x38F011A;
+    constexpr uint64_t ENTITY_LIST           = 0x3B40E18;
+    constexpr uint64_t ENTITY_REGISTRY       = 0x4289A80;  // capacity @+0, count @+4, slots ptr @+0x14
+    constexpr uint64_t CAMERA_ENC            = 0x3AD8F18;
+    constexpr uint64_t CLIENT_GAME           = 0x3CA3668;
+    constexpr uint64_t GLOBAL_ADMIN          = 0x3CA93D0;
+    constexpr uint64_t GKEY_PTR              = 0x3CA3558;
+    constexpr uint64_t BYTE_KEY              = 0x3972A3B;
+    constexpr uint64_t SM_XOR_BYTE           = 0x39720FA;
     constexpr uint64_t COMP_KEY_OFF          = 0x32;
     constexpr uint64_t SM_GKEY_OFF           = 0x55;
-    constexpr uint64_t FOV_RVA               = 0x41D3E68;
-    constexpr uint64_t VERSION_STRING        = 0x4239B28;
-    constexpr uint64_t LAT_OVERRIDE_RVA      = 0x391ADE0;
+    constexpr uint64_t FOV_RVA               = 0x4263DB8;
+    constexpr uint64_t VERSION_STRING        = 0x42C9AF8;
+    constexpr uint64_t LAT_OVERRIDE_RVA      = 0x399CE90;
+    constexpr uint64_t ENTITY_HANDLE_CAPACITY = 0x3B40E04;
+    constexpr uint64_t ENTITY_HANDLE_LIVE_COUNT = 0x3B40E08;
+    constexpr uint64_t ENTITY_HANDLE_FREE_HEAD = 0x3B40E0C;
+    constexpr uint64_t ENTITY_HANDLE_FREE_TAIL = 0x3B40E10;
+    constexpr uint64_t ENTITY_HANDLE_TABLE   = 0x3B40E18;
+    constexpr uint64_t ENTITY_HANDLE_OFF     = 0x134;
+    constexpr uint64_t ENTITY_PRESENCE_MASK_OFF = 0x110;
+    constexpr uint64_t LINK_UID_OFF          = 0xD0;
+    constexpr uint64_t SM_GAMEADMIN_OFF      = 0x2E0;
+    constexpr uint64_t SM_LATENCY_OFF        = 0xC8;
+    constexpr uint64_t VM_XOR                = 0xF0E9B9E60E77F60D;
+    constexpr uint64_t VM_SUB                = 0x2BBB67E6D9ABB5EE;
+    constexpr uint64_t VM_FUCKBLIZZARD       = 0xEAE9FFFDFBDB2C9F;
 
     constexpr uint64_t ENT_COMP_BASE         = 0x80;
     constexpr uint64_t ENT_BITMAP            = 0x110;
